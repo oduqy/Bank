@@ -1,0 +1,48 @@
+# Настройки аккаунта и начальное состояние
+ACCOUNT_NAME = "Алексей"
+CORRECT_PIN = "1234"
+balance = 15000.0
+withdrawal_limit = 50000.0
+
+# Авторизация
+print("=== ДОБРО ПОЖАЛОВАТЬ В БАНКОМАТ ===")
+entered_pin = input("Введите ваш PIN-код: ")
+
+if entered_pin == CORRECT_PIN:
+    print(f"\nЗдравствуйте, {ACCOUNT_NAME}!")
+    print("Выберите действие:")
+    print("1 — Проверить баланс")
+    print("2 — Пополнить счёт")
+    print("3 — Снять наличные")
+    
+    choice = input("Введите номер операции (1-3): ")
+
+    if choice == "1":
+        print(f"\nВаш текущий баланс: {balance} руб.")
+
+    elif choice == "2":
+        deposit_amount = float(input("\nВведите сумму для пополнения: "))
+        if deposit_amount > 0:
+            balance += deposit_amount
+            print(f"Счёт успешно пополнен! Новый баланс: {balance} руб.")
+        else:
+            print("Ошибка: сумма пополнения должна быть больше нуля.")
+
+    elif choice == "3":
+        withdraw_amount = float(input("\nВведите сумму для снятия: "))
+        if withdraw_amount <= 0:
+            print("Ошибка: сумма должна быть больше нуля.")
+        elif withdraw_amount > balance:
+            print("Ошибка: недостаточно средств на счёте.")
+        elif withdraw_amount > withdrawal_limit:
+            print(f"Ошибка: превышен дневной лимит снятия ({withdrawal_limit} руб.).")
+        else:
+            balance -= withdraw_amount
+            print(f"Возьмите деньги: {withdraw_amount} руб.")
+            print(f"Остаток на счёте: {balance} руб.")
+
+    else:
+        print("\nОшибка: выбран несуществующий пункт меню.")
+
+else:
+    print("\nОшибка: неверный PIN-код. Доступ запрещён.")
